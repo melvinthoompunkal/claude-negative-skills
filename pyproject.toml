@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "negative-skills"
+version = "0.1.0"
+description = "Turn your Claude frustrations into installable constraint files"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "anthropic",
+    "click",
+    "python-dotenv",
+    "pyyaml",
+    "mcp",
+]
+
+[project.scripts]
+negative-skills = "negative_skills.main:main"
+negative-skills-mcp = "negative_skills.mcp_server:run"
+
+[tool.setuptools.packages.find]
+where = ["src"]

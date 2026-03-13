@@ -1,3 +1,15 @@
+Metadata-Version: 2.4
+Name: negative-skills
+Version: 0.1.0
+Summary: Turn your Claude frustrations into installable constraint files
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: anthropic
+Requires-Dist: click
+Requires-Dist: python-dotenv
+Requires-Dist: pyyaml
+Requires-Dist: mcp
+
 # 🚫 Negative Skills CLI
 
 Turn your Claude frustrations into an installable SKILL.md constraint file.

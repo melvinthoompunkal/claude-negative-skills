@@ -1,0 +1,5 @@
+anthropic
+click
+python-dotenv
+pyyaml
+mcp

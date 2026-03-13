@@ -12,9 +12,7 @@ def compile_skill(answers):
 
     # Build a prompt from the user's answers
     prompt = f"""
-You are a skill compiler. Your job is to take a user's frustrations with Claude and turn them into a structured negative skill file.
-
-Here is what the user told you:
+You are a skill compiler. Turn the user's frustrations into a valid SKILL.md file.
 
 Context: {answers["context"]}
 
@@ -29,29 +27,17 @@ Style things they hate:
 
 Strictness level: {answers["severity"]}
 
-Your job:
-1. Analyze these frustrations and identify the core constraints
-2. Write a SKILL.md file that encodes these as negative constraints
-3. Make the instructions clear and specific so Claude actually follows them
-4. Add a short description explaining what this skill does
+Output ONLY a valid SKILL.md file. Start with YAML frontmatter exactly like this:
 
-Return ONLY the raw markdown content for the SKILL.md file. No explanation, no preamble. Start directly with the markdown.
+---
+name: [short-kebab-case-name]
+description: [one sentence — when should Claude load this skill automatically]
+---
 
-Use this structure:
+Then write the full constraint instructions in markdown below the frontmatter.
+Include sections for: Description, Context, Constraints (CRITICAL/WARNING/PREFERENCE), and Instructions for Claude.
 
-# [Skill Name]
-
-## Description
-[What this skill does in one sentence]
-
-## Context
-[When this skill applies]
-
-## Constraints
-[List each constraint clearly, with severity: CRITICAL / WARNING / PREFERENCE]
-
-## Instructions for Claude
-[Clear behavioral instructions Claude must follow]
+No preamble. No explanation. Start with --- immediately.
 """
 
     message = client.messages.create(
@@ -71,6 +57,29 @@ def save_skill(skill_content, context):
     filename = context.lower().replace(" ", "-").replace("/", "-")[:30]
     filepath = f"output/{filename}-constraints.md"
 
+    with open(filepath, "w") as f:
+        f.write(skill_content)
+
+    return filepath
+
+def install_skill(skill_content, context):
+    import re
+    import platform
+
+    # Find the skill name from frontmatter
+    match = re.search(r'name:\s*(.+)', skill_content)
+    skill_name = match.group(1).strip() if match else context.lower().replace(" ", "-")[:30]
+
+    # Find the right skills folder for the OS
+    if platform.system() == "Windows":
+        base = os.path.expanduser("~\\.claude\\skills")
+    else:
+        base = os.path.expanduser("~/.claude/skills")
+
+    skill_dir = os.path.join(base, skill_name)
+    os.makedirs(skill_dir, exist_ok=True)
+
+    filepath = os.path.join(skill_dir, "SKILL.md")
     with open(filepath, "w") as f:
         f.write(skill_content)
 

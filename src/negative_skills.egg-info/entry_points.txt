@@ -1,0 +1,3 @@
+[console_scripts]
+negative-skills = negative_skills.main:main
+negative-skills-mcp = negative_skills.mcp_server:run

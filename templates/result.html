@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Negative Skill</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, sans-serif;
+            background: #0f0f0f;
+            color: #f0f0f0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .card {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 700px;
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .sub {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        pre {
+            background: #111;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 1.2rem;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        button,
+        a.btn {
+            flex: 1;
+            text-align: center;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+        }
+
+        .copy-btn {
+            background: #e03e3e;
+            color: white;
+        }
+
+        .copy-btn:hover {
+            background: #c93232;
+        }
+
+        .share-btn {
+            background: #2a2a2a;
+            color: #f0f0f0;
+            border: 1px solid #444;
+        }
+
+        .share-btn:hover {
+            background: #333;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 1.5rem;
+            text-align: center;
+            color: #666;
+            font-size: 0.85rem;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: #aaa;
+        }
+
+        .share-url {
+            margin-top: 1rem;
+            background: #111;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 0.7rem 1rem;
+            font-size: 0.82rem;
+            color: #aaa;
+            word-break: break-all;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h1>✅ Your Negative Skill is ready</h1>
+        <p class="sub">Copy this into your Claude Code skills folder, or share the link below.</p>
+
+        <pre id="skill-output">{{ skill_content }}</pre>
+
+        <div class="actions">
+            <button class="copy-btn" onclick="copySkill()">📋 Copy SKILL.md</button>
+            <button class="share-btn" onclick="copyShareLink()">🔗 Copy share link</button>
+        </div>
+
+        <div class="share-url" id="share-url">
+            {{ request.base_url }}skill/{{ skill_id }}
+        </div>
+
+        <a class="back-link" href="/">← Make another one</a>
+    </div>
+
+    <script>
+        function copySkill() {
+            navigator.clipboard.writeText(document.getElementById("skill-output").innerText);
+            alert("Copied to clipboard!");
+        }
+        function copyShareLink() {
+            navigator.clipboard.writeText(document.getElementById("share-url").innerText.trim());
+            alert("Share link copied!");
+        }
+    </script>
+</body>
+
+</html>
