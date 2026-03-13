@@ -27,9 +27,6 @@ negative-skills
 
 Follow the prompts. Your SKILL.md will be saved to the `output/` folder and optionally installed directly into Claude Code.
 
-### Web
-Try it without installing anything at [your-deployed-url-here]
-
 ### Claude Code (MCP)
 Add it as a native tool inside Claude Code:
 ```bash
